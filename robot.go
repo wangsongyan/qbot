@@ -173,30 +173,38 @@ func (r *Robot) pollMessage() {
 			"key":        "",
 		})
 		if err == nil {
-			ParseMessage(r, data)
+			code := ParseMessage(r, data)
+			if code == 103 {
+				fmt.Println("请先在浏览器访问http://w.qq.com/扫码登录，然后退出。重新启动程序")
+				break
+			}
 		}
 	}
 }
 
-func ParseMessage(r *Robot, msg []byte) {
+func ParseMessage(r *Robot, msg []byte) int {
 	sj, err := simplejson.NewJson(msg)
 	if err != nil {
-		return
+		return -1
 	}
-	if retcode, err := sj.Get("retcode").Int(); err != nil || retcode != 0 {
-		return
+	retcode, err := sj.Get("retcode").Int()
+	if err != nil {
+		return -1
+	}
+	if retcode != 0 {
+		return retcode
 	}
 	poll_type, err := sj.Get("result").GetIndex(0).Get("poll_type").String()
 	if err != nil {
-		return
+		return -1
 	}
 	if len(poll_type) == 0 {
-		return
+		return -1
 	}
 	value := sj.Get("result").GetIndex(0).Get("value")
 	contentArr, err := value.Get("content").Array()
 	if err != nil {
-		return
+		return -1
 	}
 	atable := len(contentArr) > 2
 	content := ""
@@ -228,6 +236,7 @@ func ParseMessage(r *Robot, msg []byte) {
 	if r.onMessage != nil {
 		r.onMessage(r, message)
 	}
+	return 0
 }
 
 func (r *Robot) SendToBuddy(toUin int, message string) error {
