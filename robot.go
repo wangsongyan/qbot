@@ -14,17 +14,17 @@ import (
 	"time"
 )
 
+type H map[string]string
+
 type Robot struct {
 	client       *http.Client
 	onQRChange   func(*Robot, []byte)
 	onCheckLogin func(*Robot) bool
 	onLogin      func(*Robot)
 	onMessage    func(*Robot, *Message)
-	parameter    map[string]string
-	header       map[string]string
+	parameter    H
+	header       H
 }
-
-type H map[string]string
 
 type Message struct {
 	PollType string `json:"poll_type"`
@@ -47,8 +47,8 @@ func New() (*Robot, error) {
 		client: &http.Client{
 			Jar: jar,
 		},
-		header:    map[string]string{},
-		parameter: map[string]string{},
+		header:    H{},
+		parameter: H{},
 	}, nil
 }
 
@@ -157,7 +157,6 @@ func (r *Robot) Run() {
 	if r.onLogin != nil {
 		r.onLogin(r)
 	}
-
 	if r.onMessage != nil {
 		r.pollMessage()
 	}
