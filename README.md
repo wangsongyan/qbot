@@ -1,5 +1,5 @@
 # qbot
-基于webqq协议的qq机器人（2017-09-11测试可用）。参考借鉴[SmartQQ](https://github.com/JamesWone/SmartQQ)，由于获取扫码状态url修改，原项目已经不能使用了。
+基于webqq协议的qq机器人（2018-07-10测试可用）。参考借鉴[SmartQQ](https://github.com/JamesWone/SmartQQ)，由于获取扫码状态url修改，原项目已经不能使用了。**使用之前需要先在浏览器里登录一次webqq**。
 
 # 使用方法
 ```
