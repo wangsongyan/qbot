@@ -1,6 +1,9 @@
 # qbot
 基于webqq协议的qq机器人（2018-07-10测试可用）。参考借鉴[SmartQQ](https://github.com/JamesWone/SmartQQ)，由于获取扫码状态url修改，原项目已经不能使用了。**使用之前需要先在浏览器里登录一次webqq**。
 
+# 注意
+**由于业务调整，Smart QQ从2019年1月1日起停止服务。**
+
 # 使用方法
 ```
 go get -u -v github.com/wangsongyan/qbot
